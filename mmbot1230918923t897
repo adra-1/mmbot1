@@ -1,0 +1,28 @@
+import discord
+from discord.ext import commands
+
+DISCORD_TOKEN = "MTI1ODUyNjkwNDMzNjY0NjE2NQ.Gjt1fp.0SCMC2B7TY4kfVqrG-gTz1Wm1hGAZpQTGCZ1l4"
+intents = discord.Intents.default()
+intents.message_content = True
+client = commands.Bot(command_prefix='?', intents=intents)
+
+guild_id = 882708876749848606  # Replace with your guild ID
+
+@client.event
+async def on_ready():
+    await client.change_presence(status=discord.Status.online)
+    print(f'We have logged in as {client.user}')
+
+@client.command()
+async def createrole(ctx):
+    role_id = 1258517128739553431
+    channel_id = 1204722690553020457
+    role = ctx.guild.get_role(role_id)
+    await ctx.author.add_roles(role)
+    channel = client.get_channel(channel_id)
+    await channel.send(f"**{ctx.author} has joined us! Check the staff channels to learn more!**")
+
+def start(): 
+    client.run(DISCORD_TOKEN)
+
+start()
